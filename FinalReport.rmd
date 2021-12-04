@@ -92,8 +92,28 @@ barchartGC(~infected + treatment,data=LGBTQ, type="percent")
 
 ```
 
+  Both of the bar charts show no results.
+  
+```{r}
 
+table1 <- xtabs(~infected + treatment, data=LGBTQ)
+rowPerc(table1)
+colPerc(table1)
+```
+  The numerical summary shows no results for neither placebo nor treatment. Therefor I must conclude that being LGBTQ must not effect the results of neither the placebo nor the treatment.
+  
 # Drug Users
+```{r}
+DrugUsers <- filter(TheData, sex=="yes")
+```
 
+```{r}
+barchartGC(~infected + treatment,data=DrugUsers)
+barchartGC(~infected + treatment,data=DrugUsers, type="percent")
+
+```
+  
+  I am getting the same results as the LGBTQ data therefor I must conclude that being a drug user and part of the LGBTQ community must not have a part in effecting whether the treatment/placebo works or not.
+    
 # Conclusions and recommendations
-
+ I conclude that though the treatment works differently on men and women, it does not play a role in people of the LGBTQ community or drug users according to the data that is presented here. 
