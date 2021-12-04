@@ -24,11 +24,74 @@ TheData <- TheData %>% mutate_if(is.character, as.factor)
 A new  preventative vaccine (covid91) is under test in clinical trials. Given the nature of this vaccine it is suspected that the drug may exhibit different effectiveness across the variety of subpopulations tracked. Consider population subgroups consisting of Males, Females, just the drug users, and just those in the LGBTQ community. Write a complete report that separately considers this drug for each subgroup and your recommendations as to whether people in the subgroup should take the vaccine. Part of the information you need to compute is the so-called effectiveness of the drug for each subgroup of people. Include a 95% confidence interval of the effectiveness for each different subgroup. Structure your report in four sections each devoted to one of the four subgroups, use null and alternative hypothesis statements and correct statistical verbage when referencing p-values in conclusions.
 
 # Males
+```{r}
+Guys <- filter(TheData, sex=="Man")
+```
 
+```{r}
+barchartGC(~infected + treatment,data=Guys)
+barchartGC(~infected + treatment,data=Guys, type="percent")
+
+```
+  
+The data illustrates that the overwhelming majority of the population of Guys were not infected, however the guys who received the treatment actually were more likely to acquire COVID than the ones who received the placebo.
+  
+```{r}
+
+table1 <- xtabs(~infected + treatment, data=Guys)
+rowPerc(table1)
+colPerc(table1)
+```
+  
+The numerical summary states that the vast majority of the guys were ok and uninfected. Of those that were, 50.31% had received the drug while 49.69% had received the placebo.
+  
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+```
+  
+The chi square test shown above demonstrates a sizable difference in the expected counts by the null and the actual results in the data. The Fisher test similarly had a small p-value like the chi square test and as a result, we can assert the the drug taken has a significant effect on the likelihood of guys becoming infected with COVID or not. The Fisher test calculated that the odd of acquiring COVID when taking the drug is 1.4738:1. This is based in a 95% confidence interval ranging from 1.1767 to 1.8497. We can reject our null hypothesis according to the tests above. I would not recommend taking the treatment.
 
 # Females
+```{r}
+Girls <- filter(TheData, sex=="Woman")
+```
 
+```{r}
+barchartGC(~infected + treatment,data=Girls)
+barchartGC(~infected + treatment,data=Girls, type="percent")
+
+```
+   
+This data shows that Women were way more effected by taking the treatment than Men. In this bar chart, the women benefitted more than the men.
+  
+```{r}
+
+table1 <- xtabs(~infected + treatment, data=Girls)
+rowPerc(table1)
+colPerc(table1)
+```
+ The numerical summary states that the vast majority of the Girls were ok and uninfected. Of those that were, 48.54% had received the drug while 51.46% had received the placebo. 
+ 
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+```
+The chi square test shown above demonstrates a sizable difference in the expected counts by the null and the actual results in the data. The Fisher test similarly had a small p-value (0.0005801) like the chi square test and as a result, we can assert the the drug taken has a significant effect on the likelihood of girls becoming infected with COVID or not. The Fisher test calculated that the odd of acquiring COVID when taking the drug is 0.6784848:1. This is based in a 95% confidence interval ranging from 0.5406079 to 0.8497815. We can accept our null hypothesis according to the tests above. I would recommend taking the treatment.
+  
 # LGBTQ
+```{r}
+LGBTQ <- filter(TheData, sex=="gay")
+```
+
+```{r}
+barchartGC(~infected + treatment,data=LGBTQ)
+barchartGC(~infected + treatment,data=LGBTQ, type="percent")
+
+```
+
 
 # Drug Users
 
